@@ -11,11 +11,13 @@ package clientesdistribuidos;
  */
 public class Login extends javax.swing.JDialog {
 
+    private boolean maestro;
     /**
      * Creates new form login
      */
-    public Login(java.awt.Frame parent, boolean modal) {
+    public Login(java.awt.Frame parent, boolean modal, boolean maestro) {
         super(parent, modal);
+        this.maestro=maestro;
         initComponents();
         this.setLocationRelativeTo(this);
         
