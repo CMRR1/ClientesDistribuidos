@@ -5,17 +5,22 @@
  */
 package clientesdistribuidos;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 /**
  *
  * @author ceccy
  */
-public class usuario extends javax.swing.JFrame {
+public class Usuario extends javax.swing.JFrame {
 
     /**
      * Creates new form usuario
      */
-    public usuario() {
+    public Usuario() {
         initComponents();
+        
+        this.setLocationRelativeTo(this);
     }
 
     /**
@@ -43,13 +48,23 @@ public class usuario extends javax.swing.JFrame {
 
         buttonTutor.setBackground(new java.awt.Color(0, 153, 153));
         buttonTutor.setFont(new java.awt.Font("Calibri Light", 1, 14)); // NOI18N
-        buttonTutor.setForeground(new java.awt.Color(204, 204, 204));
+        buttonTutor.setForeground(new java.awt.Color(51, 51, 51));
         buttonTutor.setText("Tutor");
+        buttonTutor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonTutorMouseClicked(evt);
+            }
+        });
 
         buttonProfesor.setBackground(new java.awt.Color(0, 153, 153));
         buttonProfesor.setFont(new java.awt.Font("Calibri Light", 1, 14)); // NOI18N
-        buttonProfesor.setForeground(new java.awt.Color(204, 204, 204));
+        buttonProfesor.setForeground(new java.awt.Color(51, 51, 51));
         buttonProfesor.setText("Profesor");
+        buttonProfesor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonProfesorMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -120,6 +135,21 @@ public class usuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void buttonProfesorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonProfesorMouseClicked
+
+        Login login=new Login(this,true);
+        this.dispose();
+        login.setVisible(true);
+        
+        
+    }//GEN-LAST:event_buttonProfesorMouseClicked
+
+    private void buttonTutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonTutorMouseClicked
+        Login login=new Login(this,true);
+        this.dispose();
+        login.setVisible(true);
+    }//GEN-LAST:event_buttonTutorMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -137,20 +167,21 @@ public class usuario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new usuario().setVisible(true);
+                new Usuario().setVisible(true);
             }
         });
     }
