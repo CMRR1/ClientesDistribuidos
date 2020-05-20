@@ -17,7 +17,7 @@ import negociodistribuidos.Asignacion;
 
 /**
  *
- * @author arand
+ * @author ceccy
  */
 public class RevisarFrame extends javax.swing.JFrame {
     private Asignacion asig;
@@ -185,16 +185,16 @@ public class RevisarFrame extends javax.swing.JFrame {
             
             out.writeInt(3);
             out.writeInt(asig.getId());
-            boolean respuesta = in.readBoolean();
-            
-            if(respuesta){
+//            boolean respuesta = in.readBoolean();
+//            
+//            if(respuesta){
                 System.out.println("Actualizada");
                 sc.close();
                 parent.actualizarTabla();
                 dispose();
-            }else{
-                System.out.println("Error en la revision");
-            }  
+//            }else{
+//                System.out.println("Error en la revision");
+//            }  
             }
             
             
