@@ -5,6 +5,8 @@
  */
 package clientesdistribuidos;
 
+import negociodistribuidos.Tutor;
+
 /**
  *
  * @author ceccy
@@ -16,18 +18,16 @@ public class Panel extends javax.swing.JFrame {
      */
     
     private String usuario, contrasenia;
+    private Tutor tutor;
     
-    public Panel(String usuario, String contrasenia) {
+    public Panel(Tutor tutor) {
         initComponents();
-        
+        this.tutor = tutor;
         System.out.println("AQUI SALE DEL PANEL");
-        this.usuario=usuario;
-        System.out.println("usuario " +usuario);
-        this.contrasenia=contrasenia;
-        System.out.println("contrasenia "+contrasenia);
+        textBienvenida.setText("Bienvenido: " + tutor.getNombre());
         this.setLocationRelativeTo(this);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,7 +40,7 @@ public class Panel extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        textBienvenida = new javax.swing.JLabel();
         buttonRevisarProgreso = new javax.swing.JButton();
         buttonEnviarMensaje = new javax.swing.JButton();
         buttonRevisarTarea = new javax.swing.JButton();
@@ -55,27 +55,28 @@ public class Panel extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Este es el Panel de los Tutores");
+        textBienvenida.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        textBienvenida.setText("Este es el Panel de los Tutores");
 
         buttonRevisarProgreso.setBackground(new java.awt.Color(0, 102, 102));
         buttonRevisarProgreso.setFont(new java.awt.Font("Calibri Light", 1, 14)); // NOI18N
-        buttonRevisarProgreso.setForeground(new java.awt.Color(0, 0, 0));
         buttonRevisarProgreso.setText("Revisar Progreso");
         buttonRevisarProgreso.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         buttonEnviarMensaje.setBackground(new java.awt.Color(0, 153, 153));
         buttonEnviarMensaje.setFont(new java.awt.Font("Calibri Light", 1, 14)); // NOI18N
-        buttonEnviarMensaje.setForeground(new java.awt.Color(0, 0, 0));
         buttonEnviarMensaje.setText("Enviar Mensaje");
         buttonEnviarMensaje.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         buttonRevisarTarea.setBackground(new java.awt.Color(0, 204, 204));
         buttonRevisarTarea.setFont(new java.awt.Font("Calibri Light", 1, 14)); // NOI18N
-        buttonRevisarTarea.setForeground(new java.awt.Color(0, 0, 0));
         buttonRevisarTarea.setText("Revisar Tarea");
         buttonRevisarTarea.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        buttonRevisarTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRevisarTareaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -84,21 +85,21 @@ public class Panel extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(buttonRevisarTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonRevisarProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
+                .addComponent(buttonRevisarProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
                 .addComponent(buttonEnviarMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(68, Short.MAX_VALUE)
+                .addComponent(textBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonEnviarMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,14 +156,22 @@ public class Panel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void buttonRevisarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRevisarTareaActionPerformed
+        // TODO add your handling code here:
+        Asignaciones asig = new Asignaciones(tutor.getAlumno());
+        asig.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_buttonRevisarTareaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonEnviarMensaje;
     private javax.swing.JButton buttonRevisarProgreso;
     private javax.swing.JButton buttonRevisarTarea;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel textBienvenida;
     // End of variables declaration//GEN-END:variables
 }

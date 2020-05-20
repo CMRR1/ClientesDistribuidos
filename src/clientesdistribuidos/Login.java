@@ -5,26 +5,39 @@
  */
 package clientesdistribuidos;
 
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import negociodistribuidos.Tutor;
+
 /**
  *
  * @author ceccy
  */
 public class Login extends javax.swing.JDialog {
 
+    final String host = "127.0.0.1";
+    final int puerto = 5060;
+
     private boolean maestro;
+
     /**
      * Creates new form login
      */
     public Login(java.awt.Frame parent, boolean modal, boolean maestro) {
         super(parent, modal);
-        this.maestro=maestro;
+        this.maestro = maestro;
         initComponents();
         this.setLocationRelativeTo(this);
-        
+
     }
-
-
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -182,16 +195,45 @@ public class Login extends javax.swing.JDialog {
     }//GEN-LAST:event_textUsuarioActionPerformed
 
     private void buttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoginActionPerformed
-       String usuario=textUsuario.getText();
-       System.out.println("usuario: " +usuario); 
-        
-       String contrasenia=textContrasenia.getText();
-       System.out.println("contrasenia "+contrasenia);
-        
-       Panel panel=new Panel(usuario,contrasenia);
-        this.dispose();
-        panel.setVisible(true);
-        
+        String usuario = textUsuario.getText();
+        System.out.println("usuario: " + usuario);
+
+        String contrasenia = textContrasenia.getText();
+        System.out.println("contrasenia " + contrasenia);
+
+        DataInputStream in;
+        DataOutputStream out;
+        ObjectInputStream inObj;
+
+        try {
+            Socket sc = new Socket(host, puerto);
+            in = new DataInputStream(sc.getInputStream());
+            out = new DataOutputStream(sc.getOutputStream());
+            inObj = new ObjectInputStream(sc.getInputStream());
+
+            out.writeInt(0);
+            out.writeUTF(usuario);
+            out.writeUTF(contrasenia);
+
+            boolean login = in.readBoolean();
+
+            if (login) {
+                Tutor tuto =(Tutor) inObj.readObject();
+                Panel panel = new Panel(tuto);
+                this.setVisible(false);
+                sc.close();
+                panel.setVisible(true);
+            } else {
+                System.out.println("Datos invalidos");
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_buttonLoginActionPerformed
 
     /**
