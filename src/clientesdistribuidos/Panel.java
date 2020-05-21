@@ -19,9 +19,11 @@ public class Panel extends javax.swing.JFrame {
     
     private String usuario, contrasenia;
     private Tutor tutor;
+    private Login log;
     
-    public Panel(Tutor tutor) {
+    public Panel(Tutor tutor, Login log) {
         initComponents();
+        this.log = log;
         this.tutor = tutor;
         System.out.println("AQUI SALE DEL PANEL");
         textBienvenida.setText("Bienvenido: " + tutor.getNombre());
@@ -44,6 +46,7 @@ public class Panel extends javax.swing.JFrame {
         buttonRevisarProgreso = new javax.swing.JButton();
         buttonEnviarMensaje = new javax.swing.JButton();
         buttonRevisarTarea = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,6 +65,11 @@ public class Panel extends javax.swing.JFrame {
         buttonRevisarProgreso.setFont(new java.awt.Font("Calibri Light", 1, 14)); // NOI18N
         buttonRevisarProgreso.setText("Revisar Progreso");
         buttonRevisarProgreso.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        buttonRevisarProgreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRevisarProgresoActionPerformed(evt);
+            }
+        });
 
         buttonEnviarMensaje.setBackground(new java.awt.Color(0, 153, 153));
         buttonEnviarMensaje.setFont(new java.awt.Font("Calibri Light", 1, 14)); // NOI18N
@@ -78,22 +86,37 @@ public class Panel extends javax.swing.JFrame {
             }
         });
 
+        btnVolver.setBackground(new java.awt.Color(0, 153, 153));
+        btnVolver.setFont(new java.awt.Font("Calibri Light", 1, 14)); // NOI18N
+        btnVolver.setText("Desconectar");
+        btnVolver.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(buttonRevisarTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonRevisarProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                .addGap(10, 10, 10)
-                .addComponent(buttonEnviarMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(68, Short.MAX_VALUE)
                 .addComponent(textBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(buttonRevisarTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(buttonRevisarProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonEnviarMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,10 +125,12 @@ public class Panel extends javax.swing.JFrame {
                 .addComponent(textBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonEnviarMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonRevisarTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonRevisarProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48))
+                    .addComponent(buttonRevisarProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonEnviarMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -139,7 +164,7 @@ public class Panel extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -158,14 +183,29 @@ public class Panel extends javax.swing.JFrame {
 
     private void buttonRevisarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRevisarTareaActionPerformed
         // TODO add your handling code here:
-        Asignaciones asig = new Asignaciones(tutor.getAlumno());
+        Asignaciones asig = new Asignaciones(tutor.getAlumno(),this);
         asig.setVisible(true);
         this.setVisible(false);
         
     }//GEN-LAST:event_buttonRevisarTareaActionPerformed
 
+    private void buttonRevisarProgresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRevisarProgresoActionPerformed
+        RevisionCalificacion calif = new RevisionCalificacion(this,tutor.getAlumno());
+        calif.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_buttonRevisarProgresoActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        // TODO add your handling code here:
+        this.log.setVisible(true);
+        dispose();
+        
+        
+    }//GEN-LAST:event_btnVolverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVolver;
     private javax.swing.JButton buttonEnviarMensaje;
     private javax.swing.JButton buttonRevisarProgreso;
     private javax.swing.JButton buttonRevisarTarea;

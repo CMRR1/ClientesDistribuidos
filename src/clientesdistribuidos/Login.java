@@ -27,12 +27,13 @@ public class Login extends javax.swing.JDialog {
     final int puerto = 5060;
 
     private boolean maestro;
-
+    private Usuario usuario;
     /**
      * Creates new form login
      */
-    public Login(java.awt.Frame parent, boolean modal, boolean maestro) {
+    public Login(Usuario parent, boolean modal, boolean maestro) {
         super(parent, modal);
+        this.usuario = parent;
         this.maestro = maestro;
         initComponents();
         this.setLocationRelativeTo(this);
@@ -125,6 +126,11 @@ public class Login extends javax.swing.JDialog {
         buttonRegresar.setFont(new java.awt.Font("Calibri Light", 1, 14)); // NOI18N
         buttonRegresar.setForeground(new java.awt.Color(51, 51, 51));
         buttonRegresar.setText("Regresar");
+        buttonRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -204,8 +210,8 @@ public class Login extends javax.swing.JDialog {
         DataInputStream in;
         DataOutputStream out;
         ObjectInputStream inObj;
-
-        try {
+        if(!maestro){
+           try {
             Socket sc = new Socket(host, puerto);
             in = new DataInputStream(sc.getInputStream());
             out = new DataOutputStream(sc.getOutputStream());
@@ -219,11 +225,12 @@ public class Login extends javax.swing.JDialog {
 
             if (login) {
                 Tutor tuto =(Tutor) inObj.readObject();
-                Panel panel = new Panel(tuto);
+                Panel panel = new Panel(tuto,this);
                 this.setVisible(false);
                 sc.close();
                 panel.setVisible(true);
             } else {
+                sc.close();
                 System.out.println("Datos invalidos");
             }
 
@@ -231,10 +238,19 @@ public class Login extends javax.swing.JDialog {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         }
+        
 
 
     }//GEN-LAST:event_buttonLoginActionPerformed
+
+    private void buttonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegresarActionPerformed
+        // TODO add your handling code here:
+        this.usuario.setVisible(true);
+        dispose();
+        
+    }//GEN-LAST:event_buttonRegresarActionPerformed
 
     /**
      * @param args the command line arguments

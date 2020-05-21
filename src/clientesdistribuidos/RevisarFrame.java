@@ -20,37 +20,39 @@ import negociodistribuidos.Asignacion;
  * @author arand
  */
 public class RevisarFrame extends javax.swing.JFrame {
+
     private Asignacion asig;
     final String host = "127.0.0.1";
     final int puerto = 5060;
     Asignaciones parent;
+
     /**
      * Creates new form RevisarFrame
      */
     public RevisarFrame(Asignacion asig, Asignaciones parent) {
         this.asig = asig;
         this.parent = parent;
-        
+
         this.setLocationRelativeTo(this);
         initComponents();
         cursoLabel.setText(asig.getCurso());
         asignacionLabel.setText(asig.getNombre());
-        calificacionLabel.setText("Calificacion: "+asig.getCalificacion());
-        if(asig.isEstado()){
+        calificacionLabel.setText("Calificacion: " + asig.getCalificacion());
+        if (asig.isEstado()) {
             revisadoLabel.setText("Revisado");
             btnConfirmar.setEnabled(false);
-        }else{
+        } else {
             revisadoLabel.setText("Sin Revisar");
         }
-        if(asig.isTipo()){
+        if (asig.isTipo()) {
             tipoLabel.setText("Tarea");
-        }else{
+        } else {
             tipoLabel.setText("Ejercicio");
         }
         areaNotas.setEditable(false);
         areaNotas.setLineWrap(true);
         areaNotas.setText(asig.getNotas());
-        
+
     }
 
     /**
@@ -101,7 +103,7 @@ public class RevisarFrame extends javax.swing.JFrame {
             }
         });
 
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setText("Volver");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -166,45 +168,41 @@ public class RevisarFrame extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        parent.actualizarTabla();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         try {
             // TODO add your handling code here:
-            if(!asig.isEstado()){
-              System.out.println("Iniciando conexion con logica");
-            DataInputStream in;
-            DataOutputStream out;
-            ObjectInputStream inObj;
-            
-            System.out.println("Socket a logica");
-            Socket sc = new Socket(host, puerto);
-            in = new DataInputStream(sc.getInputStream());
-            out = new DataOutputStream(sc.getOutputStream());
-            
-            out.writeInt(3);
-            out.writeInt(asig.getId());
-            boolean respuesta = in.readBoolean();
-            
-            if(respuesta){
-                System.out.println("Actualizada");
+            if (!asig.isEstado()) {
+                System.out.println("Iniciando conexion con logica");
+                DataInputStream in;
+                DataOutputStream out;
+                ObjectInputStream inObj;
+
+                System.out.println("Socket a logica");
+                Socket sc = new Socket(host, puerto);
+                in = new DataInputStream(sc.getInputStream());
+                out = new DataOutputStream(sc.getOutputStream());
+                int opcion = 3;
+                out.writeInt(opcion);
+                System.out.println(opcion);
+                
+                out.writeInt(asig.getId());
+                System.out.println(asig.getId());
+                System.out.println("CERRANDO EL SOCKET");
+                
+                //boolean respuesta = in.readBoolean();
+                btnConfirmar.setEnabled(false);
                 sc.close();
-                parent.actualizarTabla();
-                dispose();
-            }else{
-                System.out.println("Error en la revision");
-            }  
+                System.out.println("Actualizada");
             }
-            
-            
-            
-            
+
         } catch (IOException ex) {
             Logger.getLogger(RevisarFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnConfirmarActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

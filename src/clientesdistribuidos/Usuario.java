@@ -137,7 +137,7 @@ public class Usuario extends javax.swing.JFrame {
 
     private void buttonProfesorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonProfesorMouseClicked
         Login login=new Login(this,true,true);
-        this.dispose();
+        this.setVisible(false);
         login.setVisible(true);
         
         
@@ -145,7 +145,7 @@ public class Usuario extends javax.swing.JFrame {
 
     private void buttonTutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonTutorMouseClicked
         Login login=new Login(this,true,false);
-        this.dispose();
+        this.setVisible(false);
         login.setVisible(true);
         
     }//GEN-LAST:event_buttonTutorMouseClicked

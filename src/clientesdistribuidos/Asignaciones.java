@@ -27,12 +27,13 @@ public class Asignaciones extends javax.swing.JFrame {
     private ArrayList<Asignacion> asignaciones;
     private int id_alumno;
     private Asignacion revision = null;
+    private Panel parent;
 
     /**
      * Creates new form Asignaciones
      */
-    public Asignaciones(int id_alumno) {
-        asignaciones = new ArrayList<Asignacion>();
+    public Asignaciones(int id_alumno, Panel parent) {
+        this.parent = parent;
         this.id_alumno = id_alumno;
         this.getAsignaciones();
         this.setLocationRelativeTo(this);
@@ -66,6 +67,7 @@ public class Asignaciones extends javax.swing.JFrame {
 
     private void getAsignaciones() {
         try {
+            asignaciones = new ArrayList<Asignacion>();
             System.out.println("Iniciando conexion con logica");
             DataInputStream in;
             DataOutputStream out;
@@ -95,6 +97,8 @@ public class Asignaciones extends javax.swing.JFrame {
                 System.out.println("NO HAY ASIGNACIONES");
 
             }
+            System.out.println("CERRE LAS ASIGNACIONES");
+            sc.close();
 
         } catch (IOException ex) {
             Logger.getLogger(Asignaciones.class.getName()).log(Level.SEVERE, null, ex);
@@ -105,6 +109,7 @@ public class Asignaciones extends javax.swing.JFrame {
     
     private void fillTable(){
         DefaultTableModel model = (DefaultTableModel) tablaAsignaciones.getModel();
+        model.setRowCount(0);
         Object rowData[] = new Object[5];
         for(int i=0;i<this.asignaciones.size();i++){
             rowData[0] = this.asignaciones.get(i).getNombre();
@@ -179,9 +184,12 @@ public class Asignaciones extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tablaAsignaciones);
 
-        btnCancelar.setBackground(new java.awt.Color(153, 0, 51));
-        btnCancelar.setForeground(new java.awt.Color(204, 0, 0));
         btnCancelar.setText("Volver");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnRevisar.setText("Revisar");
         btnRevisar.addActionListener(new java.awt.event.ActionListener() {
@@ -241,6 +249,12 @@ public class Asignaciones extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnRevisarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.parent.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
