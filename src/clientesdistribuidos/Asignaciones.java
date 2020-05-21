@@ -18,7 +18,7 @@ import negociodistribuidos.Asignacion;
 
 /**
  *
- * @author arand
+ * @author ceccy
  */
 public class Asignaciones extends javax.swing.JFrame {
 
